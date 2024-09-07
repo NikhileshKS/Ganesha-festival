@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ganesha Chaturthi Animation</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: linear-gradient(
+          45deg,
+          #ff9933,
+          #ff9933 33%,
+          #ffffff 33%,
+          #ffffff 66%,
+          #138808 66%,
+          #138808
+        );
+        overflow: hidden;
+      }
+      #ganeshaContainer {
+        position: relative;
+        width: 300px;
+        height: 300px;
+      }
+      #ganeshaImage {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
+      }
+      .modak {
+        position: absolute;
+        font-size: 24px;
+        user-select: none;
+        pointer-events: none;
+        animation: float 3s ease-out infinite;
+      }
+      @keyframes float {
+        0% {
+          transform: translateY(0) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-100px) rotate(360deg);
+          opacity: 0;
+        }
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="ganeshaContainer">
+      <img id="ganeshaImage" src="/ganesha.jpg" alt="Lord Ganesha" />
+    </div>
+    <script>
+      const ganeshaImage = document.getElementById("ganeshaImage");
+      const container = document.getElementById("ganeshaContainer");
+
+      function createFloatingModak() {
+        const modak = document.createElement("div");
+        modak.textContent = "🍬";
+        modak.classList.add("modak");
+        modak.style.left = `${Math.random() * container.offsetWidth}px`;
+        modak.style.top = `${container.offsetHeight}px`;
+        container.appendChild(modak);
+        setTimeout(() => {
+          container.removeChild(modak);
+        }, 3000);
+      }
+
+      function animateGanesha() {
+        ganeshaImage.style.animation = "pulse 2s infinite";
+      }
+
+      function startAnimation() {
+        animateGanesha();
+        setInterval(createFloatingModak, 1000);
+      }
+
+      ganeshaImage.addEventListener("load", startAnimation);
+
+      // Fallback in case the image is already loaded
+      if (ganeshaImage.complete) {
+        startAnimation();
+      }
+    </script>
+  </body>
+</html>
